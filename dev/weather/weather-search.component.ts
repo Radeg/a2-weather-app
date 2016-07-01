@@ -8,7 +8,7 @@ import {Subject} from 'rxjs/Subject';
     selector: 'my-weather-search',
     template: `
         <section class="weather-search">
-            <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <form (ngSubmit)="onSubmit()">
                 <label for="city">City</label>
                 <input ngControl="location" type="text" id="city" (input)="onSearchLocation(input.value)" required #input>
                 <button type="submit">Add City</button>
@@ -27,14 +27,9 @@ export class WeatherSearchComponent implements OnInit {
 
     constructor (private _weatherService: WeatherService) {}
     
-    onSubmit(form: ControlGroup) {
-        this._weatherService.searchWeatherData(form.value.location)
-            .subscribe(
-                data => {
-                    const weatherItem = new WeatherItem(data.name, data.weather[0].description, data.main.temp);
-                        this._weatherService.addWeatherItem(weatherItem);
-                }
-            );
+    onSubmit() {    
+        const weatherItem = new WeatherItem(this.data.name, this.data.weather[0].description, this.data.main.temp);
+            this._weatherService.addWeatherItem(weatherItem);
     }
 
     onSearchLocation(cityName: string) {

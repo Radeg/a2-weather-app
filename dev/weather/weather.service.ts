@@ -19,6 +19,10 @@ export class WeatherService {
         WEATHER_ITEMS.push(weatherItem);
     }
 
+    clearWeatherItems() {
+        WEATHER_ITEMS.splice(0);
+    }
+
     searchWeatherData(cityName: string): Observable<any> {
         return this._http.get('http://api.openweathermap.org/data/2.5/weather?q=' + cityName + '&APPID=5f85538f1c364e10721629a15f41d788&units=metric')
             .map(response => response.json())
